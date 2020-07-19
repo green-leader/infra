@@ -1,0 +1,8 @@
+---
+  - hosts: vps
+    vars_files:
+      - vars/main.yml
+    become: yes
+    roles:
+      - role: geerlingguy.security
+      - role: geerlingguy.docker

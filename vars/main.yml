@@ -1,0 +1,7 @@
+# geerlingguy.security
+security_sudoers_passworded:
+  - sion
+
+# geerlingguy.docker
+docker_users:
+  - sion
