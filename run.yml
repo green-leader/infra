@@ -3,6 +3,10 @@
     vars_files:
       - vars/main.yml
     become: yes
+    tasks:
+      - name: Set timezone to America/Denver
+        timezone:
+          name: America/Denver
     roles:
       - role: geerlingguy.security
       - role: geerlingguy.docker
