@@ -1,0 +1,35 @@
+" Set cpp specific tab spacing
+autocmd Filetype cpp setlocal ts=2 sw=2 expandtab
+
+" don't beep, use visual bell
+set visualbell
+
+" don't use vi compatibility features
+set nocompatible
+
+" backspace across environments
+set backspace=indent,eol,start
+map!  <BS>
+
+" set line numbering
+set number
+
+" uncomment to enable syntax highlighting
+"syntax enable
+
+" uncomment to shorten tabs
+set tabstop=4
+
+" uncomment to disable line wrap
+"set nowrap
+
+" uncomment to disable auto-indent
+"au FileType * set fo-=cro
+
+" uncomment to enable spell check
+"set spell spelllang=en_us
+
+set background=dark
+
+" syntastic, run check on open
+let g:syntastic_check_on_open=1

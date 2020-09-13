@@ -1,0 +1,42 @@
+---
+# tasks file for roles/common
+- name: Update apt cache (on Debian).
+  become: yes
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+  when: ansible_os_family == 'Debian'
+
+- name: install packages
+  become: yes
+  package:
+    name:
+      - vim
+      - tmux
+      - git
+      - python3-pip
+    state: present
+
+- name: install tmux dotfile
+  copy: src=tmux.conf dest=~/.tmux.conf
+
+- name: create vim plugin directory
+  file:
+    path: ~/.vim/bundle
+    state: directory
+
+- name: install vim dotfile
+  copy: src=vimrc dest=~/.vim/vimrc
+
+- name: clone syntastic
+  git:
+    repo: https://github.com/vim-syntastic/syntastic.git
+    version: 3.10.0
+    dest: ~/.vim/pack/bundle/start/syntastic
+    update: no
+
+- name: install flake8
+  pip:
+    name: flake8==3.7.9
+    extra_args: --user
+    executable: pip3
