@@ -1,12 +1,23 @@
 ---
 - hosts: cloudflare
   tasks:
-    - name: Create a discard record for AAAA
+    - name: Create a discard record for root ipv4
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: sions.org
+        type: A
+        value: 192.0.2.1
+        proxied: yes
+        api_token: "{{ api_token }}"
+        state: present
+
+    - name: Create a discard record for root ipv6
       community.general.cloudflare_dns:
         zone: sions.org
         record: sions.org
         type: AAAA
         value: "100::"
+        proxied: yes
         api_token: "{{ api_token }}"
         state: present
 
@@ -16,6 +27,7 @@
         record: mail
         type: CNAME
         value: "business.zoho.com"
+        proxied: yes
         api_token: "{{ api_token }}"
         state: present
 
