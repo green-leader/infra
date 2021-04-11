@@ -1,2 +1,7 @@
-- src: geerlingguy.docker
-- src: geerlingguy.security
+---
+collections:
+  # Install the community.general collection from galaxy
+  - name: community.general
+# roles:
+  # Filler
+  # - name: useful role
