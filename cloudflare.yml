@@ -1,0 +1,125 @@
+---
+- hosts: cloudflare
+  tasks:
+    - name: Create a discard record for root ipv4
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: sions.org
+        type: A
+        value: 192.0.2.1
+        proxied: yes
+        api_token: "{{ api_token }}"
+        state: present
+
+    - name: Create a discard record for root ipv6
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: sions.org
+        type: AAAA
+        value: "100::"
+        proxied: yes
+        api_token: "{{ api_token }}"
+        state: present
+
+    - name: Create CNAME record for mail.sions.org redirection
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: mail
+        type: CNAME
+        value: "business.zoho.com"
+        proxied: yes
+        api_token: "{{ api_token }}"
+        state: present
+
+    - name: Create CNAME record for www.sions.org redirection
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: www
+        type: CNAME
+        value: "sions.org"
+        proxied: yes
+        api_token: "{{ api_token }}"
+        state: present
+
+    - name: Create MX records
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: sions.org
+        type: MX
+        value: "{{ item.value }}"
+        priority: "{{ item.priority }}"
+        api_token: "{{ api_token }}"
+        state: present
+      loop:
+        - { value: "mx.zoho.com", priority: 10 }
+        - { value: "mx2.zoho.com", priority: 20 }
+        - { value: "mx3.zoho.com", priority: 50 }
+
+    - name: Create NS records for do.sions.org
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: do
+        type: NS
+        value: "{{ item.value }}"
+        api_token: "{{ api_token }}"
+        state: present
+      loop:
+        - { value: "ns1.digitalocean.com" }
+        - { value: "ns2.digitalocean.com" }
+
+    - name: Create NS records for kb.sions.org
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: kb
+        type: NS
+        value: "{{ item.value }}"
+        api_token: "{{ api_token }}"
+        state: present
+      loop:
+        - { value: "ns1.digitalocean.com" }
+        - { value: "ns2.digitalocean.com" }
+
+    # - name: Create TXT record for _acme-challenge.pve.int
+    #   community.general.cloudflare_dns:
+    #     zone: sions.org
+    #     record: _acme-challenge.pve.int
+    #     type: TXT
+    #     value: 1
+    #     api_token: "{{ api_token }}"
+    #     state: present
+
+    - name: Create TXT record for _dmarc
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: _dmarc
+        type: TXT
+        value: "v=DMARC1; p=reject; rua=mailto:noreply-dmarc@sions.org; ruf=mailto:noreply-dmarc@sions.org; sp=reject; adkim=r; aspf=r"
+        api_token: "{{ api_token }}"
+        state: present
+
+    - name: Create domainkey record for mailgun
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: pic._domainkey
+        type: TXT
+        value: "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDULR3biEFE3nHpvx39qVl3t+0yTR5bp5A/FqXU0tYvMc6NyZr4A6PpnQlQ/jzNPmETv1UcOv3taDDWa7v4sa7oh6sB/oZvuGQapKvGqAW4dur7pLVdo8i739k7VJ401FWs2tbVoO7t3e/nf1Yf0lpVfXXi5hU6atuapqozUScIowIDAQAB"
+        api_token: "{{ api_token }}"
+        state: present
+
+    - name: Create TXT record for spf
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: sions.org
+        type: TXT
+        value: "v=spf1 include:zoho.com include:mailgun.org ~all"
+        api_token: "{{ api_token }}"
+        state: present
+
+    - name: Create domainkey record for zoho
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: zoho._domainkey
+        type: TXT
+        value: "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCas/Y7hVSxSQcyiDb8N9Axb++G0jdQI9OTJuUaQ7wJVEXTfOBsdxOdjU/R2BfdvTFBF/dhRrQ/YAc1o7871Le+brr+JB2c3S4/18eZ7LRDoZcdBDsPT61qu26FrzaRCq4zjzPhutO0CPoGpVjprHUMBA9otFgc+Z++fWQ+9WOJUQIDAQAB"
+        api_token: "{{ api_token }}"
+        state: present
