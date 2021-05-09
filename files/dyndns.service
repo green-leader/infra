@@ -1,0 +1,10 @@
+[Unit]
+Description=Set vpn.sions.org to the correct external ip address of this instance
+After=network.target auditd.service
+
+[Service]
+ExecStart=/usr/local/sbin/dyndns.sh
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target

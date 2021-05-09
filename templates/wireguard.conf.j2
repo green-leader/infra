@@ -1,0 +1,10 @@
+[Interface]
+Address = 192.168.2.1
+PrivateKey = {{ wg_private.content | b64decode }}
+ListenPort = 51820
+PostUp   = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o ens4 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o ens4 -j MASQUERADE
+
+[Peer]
+PublicKey = UiuT1lvvzbqVeOpVzsx3WS0C1a0ddZWs3iY+lPFojTA=
+AllowedIPs = 192.168.2.2/32
