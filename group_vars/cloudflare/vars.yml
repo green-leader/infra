@@ -1,5 +1,0 @@
----
-# nonsensitive data
-
-# sensitive data
-api_token: "{{ vault_api_token }}"
