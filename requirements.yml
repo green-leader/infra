@@ -2,6 +2,10 @@
 collections:
   # Install the community.general collection from galaxy
   - name: community.general
+  # google cloud collection from galaxy
+  - name: google.cloud
+  # allow use of sysctl
+  - name: ansible.posix
 # roles:
   # Filler
   # - name: useful role

@@ -1,0 +1,18 @@
+---
+# nonsensitive data
+project: "wireguard-server-309914"
+auth_kind: serviceaccount
+zone: "us-central1-a"
+region: "us-central1"
+scopes:
+  - https://www.googleapis.com/auth/compute
+  - https://www.googleapis.com/auth/cloud-platform
+
+# vars to help set up gcp IAP so we can ssh without external access
+# '--tunnel-through-iap' has been removed. If it's listed in these args there is an issue connecting
+ansible_ssh_args: --tunnel-through-iap --zone={{ zone }} --no-user-output-enabled --quiet --project="{{ project }}"
+ansible_scp_extra_args: --tunnel-through-iap --zone={{ zone }} --quiet --project="{{ project }}"
+
+
+# sensitive data
+service_account_file: ./service_account.json

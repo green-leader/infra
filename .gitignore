@@ -30,3 +30,5 @@ tags
 galaxy/
 
 .vault-password
+service_account.json
+google-cloud-sdk/
