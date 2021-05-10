@@ -44,6 +44,9 @@
          - name: External NAT
            type: ONE_TO_ONE_NAT
            network_tier: STANDARD
+       service_accounts:
+         - email: "{{ service_account_email }}"
+           scopes: "{{ scopes }}"
        zone: "{{ zone }}"
        project: "{{ project }}"
        auth_kind: "{{ auth_kind }}"

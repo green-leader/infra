@@ -18,11 +18,11 @@ gcloud dns record-sets transaction start -z="$MANAGEDZONE"
 gcloud dns record-sets transaction remove -z="$MANAGEDZONE" \
     --name="$DOMAIN" \
     --type=A \
-    --ttl=300 "$EXISTING"
+    --ttl=900 "$EXISTING"
 
 gcloud dns record-sets transaction add -z="$MANAGEDZONE" \
    --name="$DOMAIN" \
    --type=A \
-   --ttl=300 "$NEW"
+   --ttl=900 "$NEW"
 
 gcloud dns record-sets transaction execute -z="$MANAGEDZONE"

@@ -68,12 +68,22 @@
      shell: set -o pipefail; wg genkey | tee privatekey | wg pubkey > publickey
      args:
        chdir: /etc/wireguard
+       executable: /bin/bash
      when: not wg_keys.results.0.stat.exists and not wg_keys.results.1.stat.exists
 
    - name: get private key
      slurp:
        src: /etc/wireguard/privatekey
      register: wg_private
+
+   - name: get public key
+     slurp:
+       src: /etc/wireguard/publickey
+     register: wg_public
+
+   - name: Print public key
+     debug:
+       var: wg_public
 
    - name: setup tunnel template with mobile client
      template:
