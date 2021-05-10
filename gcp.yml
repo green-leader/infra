@@ -150,8 +150,6 @@
        log_prefix: "wireguard iptables: "
        log_level: debug
 
-  #  - name: debug
-  #    debug: "msg={{ item.stat.exists }}"
-  #    with_items: "{{ wg_keys.results }}"
-
-# when: ansible_facts.services["wg-quick@wg0.service"] is not defined
+   - name: Set timezone to America/Denver
+     timezone:
+       name: America/Denver
