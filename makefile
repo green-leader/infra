@@ -12,7 +12,6 @@ gcp:
 
 gcp_provision:
 	ANSIBLE_SSH_EXECUTABLE=./gcp-ssh-wrapper.sh ANSIBLE_SCP_EXECUTABLE=./gcp-scp-wrapper.sh ansible-playbook -i hosts -i hosts.gcp.yml gcp_provision.yml
-	make gcp
 
 gcloud:
 ifneq ($(shell test -e ./google-cloud-sdk && echo -n yes), yes)

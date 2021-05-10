@@ -17,9 +17,9 @@
      delegate_to: localhost
      run_once: yes
      gcp_compute_disk:
-         name: 'instance-1'
+         name: 'vps-gcp'
          size_gb: 10
-         source_image: 'debian-10-buster-v20210316'
+         source_image: 'projects/debian-cloud/global/images/family/debian-10'
          zone: "{{ zone }}"
          project: "{{ project }}"
          auth_kind: "{{ auth_kind }}"
@@ -28,29 +28,22 @@
          state: present
      register: disk
 
-  #  - name: Create an address
-  #    delegate_to: localhost
-  #    run_once: yes
-  #    gcp_compute_address:
-  #        name: 'staticwireguard'
-  #        region: "{{ region }}"
-  #        project: "{{ project }}"
-  #        auth_kind: "{{ auth_kind }}"
-  #        service_account_file: "{{ service_account_file }}"
-  #        scopes: "{{ scopes }}"
-  #        state: present
-  #    register: address
-
    - name: create an instance
      delegate_to: localhost
      run_once: yes
      gcp_compute_instance:
-       name: instance-1
+       name: vps-gcp
        machine_type: f1-micro
        disks:
          - auto_delete: true
            boot: true
            source: "{{ disk }}"
+       network_interfaces:
+       - network:
+         access_configs:
+         - name: External NAT
+           type: ONE_TO_ONE_NAT
+           network_tier: STANDARD
        zone: "{{ zone }}"
        project: "{{ project }}"
        auth_kind: "{{ auth_kind }}"
