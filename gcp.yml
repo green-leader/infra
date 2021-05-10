@@ -153,3 +153,6 @@
    - name: Set timezone to America/Denver
      timezone:
        name: America/Denver
+
+  roles:
+   - ansible-mailgun

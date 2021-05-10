@@ -16,3 +16,7 @@ ansible_scp_extra_args: --tunnel-through-iap --zone={{ zone }} --quiet --project
 
 # sensitive data
 service_account_file: ./service_account.json
+
+mailgun_username: "vps-gcp@sions.org"
+mailgun_password: "{{ vault_mailgun_password }}"
+mailgun_smtp_port: 2525

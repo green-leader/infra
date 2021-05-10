@@ -6,6 +6,9 @@ collections:
   - name: google.cloud
   # allow use of sysctl
   - name: ansible.posix
-# roles:
-  # Filler
-  # - name: useful role
+
+roles:
+# install postfix and set up mailgun as a smtp relay
+  - src: git@github.com:green-leader/ansible-mailgun.git
+    scm: git
+    name: ansible-mailgun
