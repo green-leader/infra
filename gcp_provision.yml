@@ -1,0 +1,84 @@
+
+
+---
+- name: Create an instance
+  hosts: localhost googlecloud
+  connection: local
+  gather_facts: no
+
+# delegate_to and run_once are both needed by ansible which has to target a resource
+  tasks:
+   - name: Add host to groupname
+     delegate_to: localhost
+     run_once: yes
+     add_host: hostname=localhost groupname=googlecloud
+
+   - name: create a disk
+     delegate_to: localhost
+     run_once: yes
+     gcp_compute_disk:
+         name: 'vps-gcp'
+         size_gb: 10
+         source_image: 'projects/debian-cloud/global/images/family/debian-10'
+         zone: "{{ zone }}"
+         project: "{{ project }}"
+         auth_kind: "{{ auth_kind }}"
+         service_account_file: "{{ service_account_file }}"
+         scopes: "{{ scopes }}"
+         state: present
+     register: disk
+
+   - name: create an instance
+     delegate_to: localhost
+     run_once: yes
+     gcp_compute_instance:
+       name: vps-gcp
+       machine_type: f1-micro
+       disks:
+         - auto_delete: true
+           boot: true
+           source: "{{ disk }}"
+       network_interfaces:
+       - network:
+         access_configs:
+         - name: External NAT
+           type: ONE_TO_ONE_NAT
+           network_tier: STANDARD
+       service_accounts:
+         - email: "{{ service_account_email }}"
+           scopes: "{{ scopes }}"
+       zone: "{{ zone }}"
+       project: "{{ project }}"
+       auth_kind: "{{ auth_kind }}"
+       service_account_file: "{{ service_account_file }}"
+       scopes: "{{ scopes }}"
+       state: present
+     register: instance
+
+   - name: create a managed zone
+     delegate_to: localhost
+     run_once: yes
+     google.cloud.gcp_dns_managed_zone:
+       name: org-sions-vpn
+       dns_name: vpn.sions.org.
+       description: gcp zone
+       project: "{{ project }}"
+       auth_kind: "{{ auth_kind }}"
+       service_account_file: "{{ service_account_file }}"
+       scopes: "{{ scopes }}"
+       state: present
+     register: managed_zone
+
+   # This is temporary but we need it for the further dynamic dns script in the VM to function
+   - name: create a resource record set
+     delegate_to: localhost
+     run_once: yes
+     google.cloud.gcp_dns_resource_record_set:
+       name: vpn.sions.org.
+       managed_zone: "{{ managed_zone }}"
+       type: A
+       target: "{{ instance.networkInterfaces.0.accessConfigs.0.natIP }}"
+       project: "{{ project }}"
+       auth_kind: "{{ auth_kind }}"
+       service_account_file: "{{ service_account_file }}"
+       state: present

@@ -2,6 +2,17 @@
 collections:
   # Install the community.general collection from galaxy
   - name: community.general
-# roles:
-  # Filler
-  # - name: useful role
+  # google cloud collection from galaxy
+  - name: google.cloud
+  # allow use of sysctl
+  - name: ansible.posix
+
+roles:
+# install postfix and set up mailgun as a smtp relay
+  - src: git@github.com:green-leader/ansible-mailgun.git
+    scm: git
+    name: ansible-mailgun
+# setup nebula
+  - src: git@github.com:green-leader/ansible-nebula.git
+    scm: git
+    name: ansible-nebula

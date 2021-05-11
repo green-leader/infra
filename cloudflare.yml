@@ -79,6 +79,20 @@
         - { value: "ns1.digitalocean.com" }
         - { value: "ns2.digitalocean.com" }
 
+    - name: Create NS records for vpn.sions.org
+      community.general.cloudflare_dns:
+        zone: sions.org
+        record: kb
+        type: NS
+        value: "{{ item.value }}"
+        api_token: "{{ api_token }}"
+        state: present
+      loop:
+        - { value: "ns-cloud-b1.googledomains.com" }
+        - { value: "ns-cloud-b2.googledomains.com" }
+        - { value: "ns-cloud-b3.googledomains.com" }
+        - { value: "ns-cloud-b4.googledomains.com" }
+
     - name: Create TXT record for _dmarc
       community.general.cloudflare_dns:
         zone: sions.org
