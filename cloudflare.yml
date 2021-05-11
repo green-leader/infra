@@ -79,15 +79,6 @@
         - { value: "ns1.digitalocean.com" }
         - { value: "ns2.digitalocean.com" }
 
-    # - name: Create TXT record for _acme-challenge.pve.int
-    #   community.general.cloudflare_dns:
-    #     zone: sions.org
-    #     record: _acme-challenge.pve.int
-    #     type: TXT
-    #     value: 1
-    #     api_token: "{{ api_token }}"
-    #     state: present
-
     - name: Create TXT record for _dmarc
       community.general.cloudflare_dns:
         zone: sions.org
@@ -111,7 +102,7 @@
         zone: sions.org
         record: sions.org
         type: TXT
-        value: "v=spf1 include:zoho.com include:mailgun.org ~all"
+        value: "v=spf1 include:zoho.com include:mailgun.org -all"
         api_token: "{{ api_token }}"
         state: present
 
