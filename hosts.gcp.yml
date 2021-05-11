@@ -1,0 +1,17 @@
+plugin: gcp_compute
+projects:
+  - wireguard-server-309914
+auth_kind: serviceaccount
+service_account_file: ./service_account.json
+hostnames:
+  - name
+groups:
+  googlecloud: "name in name"
+compose:
+  # set the ansible_host variable to connect with the private IP address without changing the hostname
+  ansible_host: name
+  ansible_connection: ssh
+  ansible_ssh_executable: ./gcp-ssh-wrapper.sh
+  ansible_ssh_transfer_method: scp
+  ansible_scp_executable: ./gcp-scp-wrapper.sh
+  ansible_ssh_common_args: None
