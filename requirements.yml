@@ -12,3 +12,7 @@ roles:
   - src: git@github.com:green-leader/ansible-mailgun.git
     scm: git
     name: ansible-mailgun
+# setup nebula
+  - src: git@github.com:green-leader/ansible-nebula.git
+    scm: git
+    name: ansible-nebula

@@ -166,3 +166,4 @@
 
   roles:
    - ansible-mailgun
+   - ansible-nebula

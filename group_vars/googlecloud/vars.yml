@@ -15,6 +15,12 @@ scopes:
 ansible_ssh_args: --tunnel-through-iap --zone={{ zone }} --no-user-output-enabled --quiet --project="{{ project }}"
 ansible_scp_extra_args: --tunnel-through-iap --zone={{ zone }} --quiet --project="{{ project }}"
 
+# nebula
+lighthouse:
+  am_lighthouse: yes
+lighthouses:
+  - nebula_ip: 172.20.10.1
+    external_addr: vpn.sions.org
 
 # sensitive data
 service_account_file: ./service_account.json
