@@ -20,3 +20,6 @@ ifneq ($(shell test -e ./google-cloud-sdk && echo -n yes), yes)
 	rm google-cloud*.tar.gz
 	./google-cloud-sdk/bin/gcloud auth activate-service-account ansible@wireguard-server-309914.iam.gserviceaccount.com --key-file=./service_account.json
 endif
+
+do:
+	ansible-playbook --ask-become-pass do.yml

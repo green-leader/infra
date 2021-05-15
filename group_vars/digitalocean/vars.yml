@@ -1,0 +1,9 @@
+# nebula
+lighthouses:
+  - nebula_ip: 172.20.10.1
+    external_addr: vpn.sions.org
+
+# mailgun smtp relay
+mailgun_username: "vps-do@sions.org"
+mailgun_password: "{{ vault_mailgun_password }}"
+mailgun_smtp_port: 2525
