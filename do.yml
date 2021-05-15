@@ -1,0 +1,16 @@
+# The hosts line will manage all of google cloud except localhost which we don't
+# need to manage
+- name: Manage digitalocean
+  hosts: digitalocean
+  become: true
+  tasks:
+   - name: get service facts
+     service_facts:
+
+   - name: Set timezone to America/Denver
+     timezone:
+       name: America/Denver
+
+  roles:
+   - ansible-mailgun
+   - ansible-nebula

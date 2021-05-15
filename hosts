@@ -1,3 +1,6 @@
 [cloudflare]
 localhost ansible_connection=local
 
+[digitalocean]
+do.sions.org
+
