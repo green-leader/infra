@@ -116,6 +116,7 @@
         zone: sions.org
         record: sions.org
         type: TXT
+        solo: true
         value: "v=spf1 include:zoho.com include:mailgun.org -all"
         api_token: "{{ api_token }}"
         state: present
